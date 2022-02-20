@@ -4,5 +4,6 @@
   "printWidth": 80,
   "singleQuote": false,
   "arrowParens": "always",
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "trailingComma": "es5"
 }
