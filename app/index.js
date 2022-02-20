@@ -2,7 +2,17 @@ import express from "express";
 const port = process.env.PORT || 3000;
 const app = express();
 
-app.listen(port, (error) => {
-  if (error) console.log(`Wystąpił błąd: ${error}`);
-  console.log(`Serwer uruchomiony na porcie ${port}`);
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", ["*"]);
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
 });
+
+app
+  .listen(port, () => {
+    console.log(`Serwer uruchomiony na porcie ${port}`);
+  })
+  .on("error", (err) => {
+    console.log(err);
+  });
