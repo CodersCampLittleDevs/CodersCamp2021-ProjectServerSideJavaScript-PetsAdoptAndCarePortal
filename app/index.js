@@ -14,5 +14,5 @@ app
     console.log(`Serwer uruchomiony na porcie ${port}`);
   })
   .on("error", (err) => {
-    console.log(err);
+    console.error("Wystąpił błąd przy uruchomieniu serwera " + err);
   });
