@@ -1,4 +1,6 @@
 import express from "express";
+import { authRouter } from "./routes/authRoutes.js";
+
 const port = process.env.PORT || 3000;
 const app = express();
 
@@ -9,9 +11,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-const authRoutes = require("./routes/authRoutes");
-
-app.use("/auth", authRoutes);
+app.use("/auth", authRouter);
 
 app
   .listen(port, () => {
