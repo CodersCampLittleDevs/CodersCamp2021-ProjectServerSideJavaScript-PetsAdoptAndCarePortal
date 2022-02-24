@@ -9,6 +9,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+const authRoutes = require("./routes/authRoutes");
+
+app.use("/auth", authRoutes);
+
 app
   .listen(port, () => {
     console.log(`App listening on port ${port}`);
