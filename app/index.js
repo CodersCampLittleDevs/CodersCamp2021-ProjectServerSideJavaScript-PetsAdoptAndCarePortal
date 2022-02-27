@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import { announcementRouter } from "./routes/announcements-routes.js";
 
 dotenv.config();
 
@@ -12,6 +13,8 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
+
+app.use("/announcements", announcementRouter);
 
 app
   .listen(port, () => {
