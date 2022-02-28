@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import { authRouter } from "./routes/authRoutes.js";
 import { announcementRouter } from "./routes/announcements-routes.js";
 
 dotenv.config();
@@ -14,6 +15,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use("/auth", authRouter);
 app.use("/announcements", announcementRouter);
 
 app
