@@ -20,13 +20,10 @@ const UserSchema = new Schema({
   },
   phone: {
     type: Number,
-    required: true,
     minLength: [8, "At least 8 characters"],
     maxlength: [10, "Maximum 10 characters"],
   },
-  announcements: [
-    { type: mongoose.Types.ObjectId, required: true, ref: "Announcement" },
-  ],
+  announcements: [{ type: mongoose.Types.ObjectId, ref: "Announcement" }],
   description: {
     type: String,
   },

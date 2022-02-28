@@ -1,4 +1,4 @@
-import bcrypt from "bvrypt";
+import bcrypt from "bcrypt";
 
 export const hashPassword = (req, res, next) => {
   const salt = bcrypt.genSaltSync(10);
