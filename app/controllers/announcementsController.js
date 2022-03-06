@@ -1,4 +1,4 @@
-import { Announcement } from "../models/AnnouncementSchema/AnnouncementSchema";
+import { Announcement } from "../db/models/AnnouncementSchema.js";
 
 export const getAnnouncementById = async (req, res, next) => {
   res.json({ response: "Pojedyncze ogłoszenie" });
