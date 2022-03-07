@@ -13,6 +13,12 @@ authRouter.post("/forgot", (req, res) => {
   });
 });
 
+authRouter.post("/reset", (req, res) => {
+  res.status(200).json({
+    message: "Handling POST requests to /auth/reset",
+  });
+});
+
 authRouter.post("/register", (req, res) => {
   res.status(200).json({
     message: "Handling POST requests to /auth/register",
