@@ -1,9 +1,12 @@
+import dotenv from "dotenv";
 import express from "express";
 import { authRouter } from "./routes/authRoutes.js";
 import { announcementRouter } from "./routes/announcementsRoutes.js";
 import { opinionsRouter } from "./routes/opinionsRoutes.js";
 import { userRouter } from "./routes/userRouter.js";
 import "./db/mongoose.js";
+
+dotenv.config();
 
 const port = process.env.PORT || 3000;
 const app = express();
