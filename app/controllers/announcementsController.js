@@ -27,7 +27,6 @@ export const addAnnouncement = async (req, res, next) => {
     res.status(422).json({ message: "Couldn't find user" });
     return next();
   }
-  console.log(creator);
   const announcement = new Announcement({
     title: title,
     description: description,
