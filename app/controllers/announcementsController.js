@@ -1,7 +1,15 @@
 import { Announcement } from "../db/models/AnnouncementSchema.js";
 
 export const getAnnouncementById = async (req, res, next) => {
-  res.json({ response: "Pojedyncze ogłoszenie" });
+  const id = req.params.aid;
+  let announcement;
+  try {
+    announcement = await Announcement.findById(id);
+    console.log(announcement);
+    res.json(announcement);
+  } catch (error) {
+    res.json({ message: error });
+  }
 };
 export const getAnnouncements = async (req, res, next) => {
   res.json({ response: "Wiele ogłoszeń" });
