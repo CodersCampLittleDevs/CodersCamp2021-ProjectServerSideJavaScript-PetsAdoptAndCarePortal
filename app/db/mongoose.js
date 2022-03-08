@@ -1,3 +1,4 @@
 import mongoose from "mongoose";
+import { config } from "../config.js";
 
-mongoose.connect("mongodb://localhost:27017/pets");
+mongoose.connect(config.database);
