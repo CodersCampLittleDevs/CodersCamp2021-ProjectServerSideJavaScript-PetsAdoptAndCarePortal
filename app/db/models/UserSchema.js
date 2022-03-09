@@ -1,12 +1,21 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import { validateEmail } from "../validators.js";
 
-const UserSchema = new Schema({
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "Email is required"],
     lowercase: true,
     trim: true,
     unique: true,
+    validate: [validateEmail, "Invalid email"],
+  },
+  password: {
+    type: String,
+    required: true,
+    minLength: [4, "At least 4 characters"],
+    maxlength: [30, "Max length is 30 characters"],
   },
   username: {
     type: String,
@@ -41,4 +50,10 @@ const UserSchema = new Schema({
   },
 });
 
-export const User = mongoose.model("User", UserSchema);
+userSchema.methods = {
+  comparePassword(password) {
+    return bcrypt.compareSync(password, this.password);
+  },
+};
+
+export const User = mongoose.model("User", userSchema);
