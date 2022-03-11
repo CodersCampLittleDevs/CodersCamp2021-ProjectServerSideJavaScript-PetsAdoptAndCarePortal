@@ -46,7 +46,13 @@ export const getUserData = async (req, res, next) => {
   let user;
   try {
     user = await User.findById(id);
-    res.status(201).json(user);
+    res.status(201).json({
+      email: user.email,
+      username: user.username,
+      city: user.city,
+      phone: user.phone,
+      announcements: user.announcements,
+    });
   } catch (error) {
     res.status(422).json({ error: "User not found" });
   }
