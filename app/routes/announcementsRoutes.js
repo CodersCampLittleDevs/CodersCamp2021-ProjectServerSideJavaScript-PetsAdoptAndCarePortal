@@ -1,4 +1,5 @@
 import express from "express";
+import { auth } from "../middleware/verifyToken.js";
 import {
   getAnnouncementById,
   getAnnouncements,
@@ -10,4 +11,4 @@ export const announcementRouter = express.Router();
 announcementRouter.get("/:aid", getAnnouncementById);
 announcementRouter.get("/", getAnnouncements);
 
-announcementRouter.post("/", addAnnouncement);
+announcementRouter.post("/", auth, addAnnouncement);
