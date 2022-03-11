@@ -25,3 +25,7 @@ export const addOpinion = async (req, res, next) => {
     res.status(422).json(error);
   }
 };
+export const getOpinions = async (req, res, next) => {
+  const opinions = await Opinion.find().limit(4);
+  res.json(opinions);
+};
