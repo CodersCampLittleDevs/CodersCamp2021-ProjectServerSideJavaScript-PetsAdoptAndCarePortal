@@ -11,4 +11,4 @@ export const announcementRouter = express.Router();
 announcementRouter.get("/:aid", getAnnouncementById);
 announcementRouter.get("/", getAnnouncements);
 
-announcementRouter.post("/", addAnnouncement);
+announcementRouter.post("/", auth, addAnnouncement);
