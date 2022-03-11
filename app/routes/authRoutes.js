@@ -1,5 +1,6 @@
 import express from "express";
 export const authRouter = express.Router();
+import { register } from "../controllers/userController.js";
 
 authRouter.post("/login", (req, res, next) => {
   res.status(200).json({
@@ -19,8 +20,4 @@ authRouter.post("/reset", (req, res) => {
   });
 });
 
-authRouter.post("/register", (req, res) => {
-  res.status(200).json({
-    message: "Handling POST requests to /auth/register",
-  });
-});
+authRouter.post("/register", register);

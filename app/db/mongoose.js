@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
+import { config } from "../config.js";
 
-mongoose.connect(
-  "mongodb+srv://Dawid:node2022@cluster0.tlzx3.mongodb.net/test",
-);
+mongoose.connect(config.database);
