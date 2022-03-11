@@ -1,7 +1,7 @@
 import express from "express";
 import { User } from "../db/models/UserSchema.js";
 import jwt from "jsonwebtoken";
-import { login, register } from "../controllers/userController.js";
+import { login, register, reset } from "../controllers/userController.js";
 
 export const authRouter = express.Router();
 
@@ -13,10 +13,6 @@ authRouter.post("/forgot", (req, res) => {
   });
 });
 
-authRouter.post("/reset", (req, res) => {
-  res.status(200).json({
-    message: "Handling POST requests to /auth/reset",
-  });
-});
+authRouter.post("/reset", reset);
 
 authRouter.post("/register", register);
