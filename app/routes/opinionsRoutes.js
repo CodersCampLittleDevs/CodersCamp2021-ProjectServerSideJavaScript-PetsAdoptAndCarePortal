@@ -1,7 +1,10 @@
 import express from "express";
-import { auth } from "../middleware/verifyToken.js";
 export const opinionsRouter = express.Router();
+import { addOpinion } from "../controllers/opinionController.js";
+import { auth } from "../middleware/verifyToken.js";
 
-opinionsRouter.post("/", auth, (req, res, next) => {
+opinionsRouter.get("/", (req, res, next) => {
   res.json({ message: "Wszystkie opinie" });
 });
+
+opinionsRouter.post("/", auth, addOpinion);
