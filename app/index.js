@@ -4,8 +4,8 @@ import { announcementRouter } from "./routes/announcementsRoutes.js";
 import { opinionsRouter } from "./routes/opinionsRoutes.js";
 import { userRouter } from "./routes/userRouter.js";
 import "./db/mongoose.js";
+import { config } from "./config.js";
 
-const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
@@ -23,8 +23,8 @@ app.use("/opinions", opinionsRouter);
 app.use("/user", userRouter);
 
 app
-  .listen(port, () => {
-    console.log(`App listening on port ${port}`);
+  .listen(config.port, () => {
+    console.log(`App listening on port ${config.port}`);
   })
   .on("error", (err) => {
     console.error("An error occurred while starting the server " + err);
