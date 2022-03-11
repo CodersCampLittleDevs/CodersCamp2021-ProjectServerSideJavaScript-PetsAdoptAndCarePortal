@@ -1,10 +1,7 @@
 import express from "express";
-import { User } from "../db/models/UserSchema.js";
-import jwt from "jsonwebtoken";
-import { login } from "../controllers/userConroller.js";
 
 export const authRouter = express.Router();
-import { register } from "../controllers/userController.js";
+import { register, login } from "../controllers/userController.js";
 
 authRouter.post("/login", login);
 
