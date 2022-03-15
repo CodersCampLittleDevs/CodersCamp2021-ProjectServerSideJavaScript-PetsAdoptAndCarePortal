@@ -6,7 +6,6 @@ export const getAnnouncementById = async (req, res, next) => {
   let announcement;
   try {
     announcement = await Announcement.findById(id);
-    console.log(announcement);
     res.json(announcement);
   } catch (error) {
     res.json({ message: error });
