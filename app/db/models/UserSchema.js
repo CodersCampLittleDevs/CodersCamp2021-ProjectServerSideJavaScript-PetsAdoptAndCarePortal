@@ -53,6 +53,10 @@ const UserSchema = new mongoose.Schema({
   closeHour: {
     type: Number,
   },
+  resetLink: {
+    data: String,
+    defalut: ""
+  }
 });
 
 UserSchema.methods = {

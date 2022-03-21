@@ -1,7 +1,7 @@
 import express from "express";
+import { login, register, reset } from "../controllers/userController.js";
 
 export const authRouter = express.Router();
-import { register, login } from "../controllers/userController.js";
 
 authRouter.post("/login", login);
 
@@ -11,10 +11,6 @@ authRouter.post("/forgot", (req, res) => {
   });
 });
 
-authRouter.post("/reset", (req, res) => {
-  res.status(200).json({
-    message: "Handling POST requests to /auth/reset",
-  });
-});
+authRouter.post("/reset", reset);
 
 authRouter.post("/register", register);
