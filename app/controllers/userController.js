@@ -2,7 +2,8 @@ import { config } from "../config.js";
 import { User } from "../db/models/UserSchema.js";
 import nodemailer from "nodemailer";
 import jsonwebtoken from "jsonwebtoken";
-
+import { validateEmail } from "../db/validators.js";
+import { config } from "../config.js";
 
 export const register = async (req, res, next) => {
   const { email, password, username, city, phone } = req.body;
@@ -82,3 +83,48 @@ export const reset = async (req, res) => {
     })
   })
 }
+export const getUserData = async (req, res, next) => {
+  const id = req.params.uid;
+  let user;
+  try {
+    user = await User.findById(id);
+    res.status(201).json({
+      email: user.email,
+      username: user.username,
+      city: user.city,
+      phone: user.phone,
+      announcements: user.announcements,
+    });
+  } catch (error) {
+    res.status(422).json({ error: "User not found" });
+  }
+};
+
+export const updateUser = async (req, res, next) => {
+  let user;
+  const id = req.params.uid;
+  try {
+    user = await User.findById(id);
+  } catch (error) {
+    res.status(400).json({ error: "User not found" });
+  }
+  if(user.comparePassword(req.body.password)){
+    const { city, phone, business, description, NIP, openHour, closeHour, password} = req.body;
+    if(city) user.city = city;
+    if(phone) user.phone = phone;
+    if(business) user.business = business;
+    if(description) user.description = description;
+    if(NIP) user.NIP = NIP;
+    if(openHour) user.openHour = openHour;
+    if(closeHour) user.closeHour = closeHour;
+    if(password) user.password = password;
+    try {
+      await user.save();
+      res.json({message: "Succesfully data changed!"})
+    } catch (error) {
+      res.json({error: "Couldn't get data"});
+    }
+  }else{
+    return res.status(422).json({error: "invalid Password"})
+  }
+};
