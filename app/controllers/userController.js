@@ -3,7 +3,6 @@ import { User } from "../db/models/UserSchema.js";
 import nodemailer from "nodemailer";
 import jsonwebtoken from "jsonwebtoken";
 import { validateEmail } from "../db/validators.js";
-import { config } from "../config.js";
 
 export const register = async (req, res, next) => {
   const { email, password, username, city, phone } = req.body;
