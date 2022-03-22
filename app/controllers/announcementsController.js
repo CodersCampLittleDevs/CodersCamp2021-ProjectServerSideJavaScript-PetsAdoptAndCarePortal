@@ -24,16 +24,17 @@ export const getAnnouncements = async (req, res, next) => {
 };
 
 export const addAnnouncement = async (req, res, next) => {
-  const { title, description, price, category, animal, city, user } = req.body;
+  const { title, description, price, category, animal, city } = req.body;
 
   let creator;
 
   try {
-    creator = await User.findById(user);
+    creator = await User.findById(req.user.id);
   } catch (e) {
     res.status(422).json({ message: "Couldn't find user" });
     return next();
   }
+
   const announcement = new Announcement({
     title: title,
     description: description,
@@ -43,6 +44,7 @@ export const addAnnouncement = async (req, res, next) => {
     city: city,
     user: creator,
   });
+
   try {
     await announcement.save();
     res.status(201).json(announcement);

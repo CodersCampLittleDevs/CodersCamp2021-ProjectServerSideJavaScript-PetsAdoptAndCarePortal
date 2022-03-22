@@ -33,8 +33,12 @@ export const login = async (req, res, next) => {
       }
     }
     const isValidPassword = user.comparePassword(req.body.password);
+    const { _id, email, username, city, phone } = user;
     if (isValidPassword) {
-      const token = jsonwebtoken.sign({ id: user.id }, config.jwt);
+      const token = jsonwebtoken.sign(
+        { id: _id, email, username, city, phone },
+        config.jwt,
+      );
       return res.header("auth-token", token).send(token);
     }
     return res.json({ error: "Invalid password" });
@@ -93,6 +97,11 @@ export const getUserData = async (req, res, next) => {
       city: user.city,
       phone: user.phone,
       announcements: user.announcements,
+      business: user.business,
+      description: user.description,
+      NIP: user.NIP,
+      openHour: user.openHour,
+      closeHour: user.closeHour,
     });
   } catch (error) {
     res.status(422).json({ error: "User not found" });
@@ -107,23 +116,32 @@ export const updateUser = async (req, res, next) => {
   } catch (error) {
     res.status(400).json({ error: "User not found" });
   }
-  if(user.comparePassword(req.body.password)){
-    const { city, phone, business, description, NIP, openHour, closeHour, password} = req.body;
-    if(city) user.city = city;
-    if(phone) user.phone = phone;
-    if(business) user.business = business;
-    if(description) user.description = description;
-    if(NIP) user.NIP = NIP;
-    if(openHour) user.openHour = openHour;
-    if(closeHour) user.closeHour = closeHour;
-    if(password) user.password = password;
+  if (user.comparePassword(req.body.password)) {
+    const {
+      city,
+      phone,
+      business,
+      description,
+      NIP,
+      openHour,
+      closeHour,
+      password,
+    } = req.body;
+    if (city) user.city = city;
+    if (phone) user.phone = phone;
+    if (business) user.business = business;
+    if (description) user.description = description;
+    if (NIP) user.NIP = NIP;
+    if (openHour) user.openHour = openHour;
+    if (closeHour) user.closeHour = closeHour;
+    if (password) user.password = password;
     try {
       await user.save();
-      res.json({message: "Succesfully data changed!"})
+      res.json({ message: "Succesfully data changed!" });
     } catch (error) {
-      res.json({error: "Couldn't get data"});
+      res.json({ error: error });
     }
-  }else{
-    return res.status(422).json({error: "invalid Password"})
+  } else {
+    return res.status(422).json({ error: "invalid Password" });
   }
 };
