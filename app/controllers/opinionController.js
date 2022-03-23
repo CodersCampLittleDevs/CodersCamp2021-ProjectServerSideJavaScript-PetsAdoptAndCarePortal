@@ -2,10 +2,10 @@ import { Opinion } from "../db/models/OpinionSchema.js";
 import { User } from "../db/models/UserSchema.js";
 
 export const addOpinion = async (req, res, next) => {
-  const { rate, opinion, user } = req.body;
+  const { rate, opinion } = req.body;
   let creator;
   try {
-    creator = await User.findById(user);
+    creator = await User.findById(req.user.id);
   } catch (error) {
     res.status(422).json({ message: "Couldn't find user" });
     return next();
