@@ -100,8 +100,6 @@ export const reset = async (req, res) => {
 
 try {
   await user.save();
-  console.log(hash);
-  console.log(user);
   return res.status(200).json({message: "Password has been changed!"})
 
 } catch (error) {
