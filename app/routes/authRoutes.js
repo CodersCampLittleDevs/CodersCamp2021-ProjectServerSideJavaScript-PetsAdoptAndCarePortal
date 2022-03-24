@@ -8,6 +8,6 @@ authRouter.post("/login", login);
 
 authRouter.post("/forgot",  forgot);
 
-authRouter.post("/reset/:token", reset);
+authRouter.post("/reset/:token", resetAuth, reset);
 
 authRouter.post("/register", register);
