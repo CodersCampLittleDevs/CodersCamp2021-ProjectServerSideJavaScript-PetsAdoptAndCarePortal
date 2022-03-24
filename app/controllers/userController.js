@@ -91,12 +91,9 @@ export const reset = async (req, res) => {
   let newPassword = req.body.password;
   let user;
 
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(newPassword, salt);
-
   let decoded = jsonwebtoken.decode(token);
   user = await User.findById(decoded.id);
-  user.password = hash;
+  user.password = newPassword;
 
 try {
   await user.save();
