@@ -3,6 +3,7 @@ import { User } from "../db/models/UserSchema.js";
 import nodemailer from "nodemailer";
 import jsonwebtoken from "jsonwebtoken";
 import { validateEmail } from "../db/validators.js";
+import bcrypt from "bcrypt";
 
 export const register = async (req, res, next) => {
   const { email, password, username, city, phone } = req.body;
@@ -47,7 +48,7 @@ export const login = async (req, res, next) => {
   }
 };
 
-export const reset = async (req, res) => {
+export const forgot = async (req, res) => {
 
   const email = req.body.email;
   User.findOne({email: email}, (err, user) =>{
@@ -57,9 +58,7 @@ export const reset = async (req, res) => {
     const token = jsonwebtoken.sign({ id: user.id }, config.jwt, {expiresIn: "20m"});
 
     const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
+      service: "Gmail",
       auth: {
         user: config.email,
         pass: config.password
@@ -70,7 +69,7 @@ export const reset = async (req, res) => {
       from: config.email,
       to: email,
       subject: "Reset password",
-      html: `<h2> To reset your password <a href="https://coderscamplittledevs.github.io/CodersCamp2021-ProjectSinglePageApplication-PetsAdoptAndCarePortal/#/CodersCamp2021-ProjectSinglePageApplication-PetsAdoptAndCarePortal/auth/reset/${token}">click here</a></h2>`
+      html: `<h2> To reset your password <a href="http://localhost:${config.port}/auth/reset/${token}">click here</a></h2>`
     }
     transporter.sendMail(mailOptions, (err, data) =>{
       if(err){
@@ -86,6 +85,30 @@ export const reset = async (req, res) => {
     })
   })
 }
+
+export const reset = async (req, res) => {
+  const token = req.params.token;
+  let newPassword = req.body.password;
+  let user;
+
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(newPassword, salt);
+
+  let decoded = jsonwebtoken.decode(token);
+  user = await User.findById(decoded.id);
+  user.password = hash;
+
+try {
+  await user.save();
+  console.log(hash);
+  console.log(user);
+  return res.status(200).json({message: "Password has been changed!"})
+
+} catch (error) {
+  res.status(400).json({error: error})
+}
+}
+
 export const getUserData = async (req, res, next) => {
   const id = req.params.uid;
   let user;

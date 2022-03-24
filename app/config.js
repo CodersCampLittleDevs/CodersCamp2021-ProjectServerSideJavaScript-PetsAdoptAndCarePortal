@@ -6,5 +6,4 @@ export const config = {
   jwt: process.env.JWT_SECRET || "asdasdawe",
   email: process.env.EMAIL,
   password: process.env.EMAIL_PASSWORD,
-  domain: ""
 };
